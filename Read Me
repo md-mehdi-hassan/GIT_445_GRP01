@@ -1,0 +1,98 @@
+Image Classification Project: Animal Classifier
+
+This project aims to build an image classification model to classify images of animals (Dog, Cow, Cat, Lamb, Zebra) into respective classes with at least 90% accuracy. The model is built using a Random Forest classifier, and the dataset is created by downloading 100 images per class from Google Images using the icrawler library.
+Project Overview
+
+The goal of this project is to:
+
+ Collect and preprocess a dataset of animal images. Build a machine learning model to classify these images into 5 categories: dog, cow, cat, lamb, and zebra.
+Train the model using the Random Forest algorithm.
+    Evaluate the model's accuracy.
+    Save the trained model for future use.
+
+Table of Contents
+
+    Installation
+    Dataset Creation
+    Model Training
+    Model Evaluation
+    Usage
+    License
+
+Installation
+Prerequisites
+
+You need to install the following Python libraries to run this project:
+
+    tensorflow
+    numpy
+    scikit-learn
+    joblib
+    icrawler
+    os
+    threading
+
+You can install these dependencies using pip:
+
+pip install tensorflow numpy scikit-learn joblib icrawler
+
+Dataset Creation
+
+The dataset consists of 5 classes: Dog, Cow, Cat, Lamb, and Zebra, with 100 images per class.
+Steps to Download Images
+
+    The image_download.py script uses the icrawler library to download images from Google Images for each class.
+    The images are stored in respective class folders within the dataset folder.
+
+To start downloading the images, simply run:
+
+python image_download.py
+
+The script will download the images concurrently using multiple threads to speed up the process. Each class will have its folder created automatically under the dataset directory.
+Model Training
+
+The model is trained using the RandomForestClassifier from scikit-learn. The images are preprocessed by resizing them to 128x128 pixels, flattening them into 1D arrays, and then splitting the data into training and validation sets.
+
+To train the model, run:
+
+python model_train.py
+
+The script will load the dataset, preprocess the images, and then train a Random Forest Classifier with 100 trees. The model's accuracy on the validation set will be displayed.
+Model Evaluation
+
+After training, the model's accuracy is evaluated using the validation dataset. The model is considered successful if it achieves at least 90% accuracy on the validation set.
+
+Once the model is trained, it is saved as a .pkl file for later use.
+
+Model saved as 'animal_classifier_rf_model.pkl'
+
+Usage
+
+To use the trained model for predictions:
+
+    Load the model using joblib.
+    Preprocess new images in the same way as the training images.
+    Use the model to predict the class of the image.
+
+Here’s how you can load and use the trained model for inference:
+
+import joblib
+import numpy as np
+from tensorflow.keras.preprocessing.image import img_to_array, load_img
+
+# Load the model
+model = joblib.load("animal_classifier_rf_model.pkl")
+
+# Preprocess new image
+img_path = "path/to/your/image.jpg"
+img = load_img(img_path, target_size=(128, 128))
+img_array = img_to_array(img).flatten()
+
+# Make prediction
+prediction = model.predict([img_array])
+print(f"Predicted class: {prediction}")
+
+License
+
+This project is open source and available under the MIT License.
+
